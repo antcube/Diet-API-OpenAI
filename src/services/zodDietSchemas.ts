@@ -36,3 +36,7 @@ export const DaysArraySchema = (mealsPerDay: number) =>
       }
     });
   });
+
+export const RecommendationsSchema = z.object({
+  recommendations: z.array(z.string().min(5))
+});
