@@ -15,11 +15,23 @@ export interface NutritionPlanInput extends CalculatorResults {
   activity: string;
 }
 
+export interface SelectedFoods {
+  proteins: string[];
+  carbohydrates: string[];
+  fats: string[];
+  dairy: string[];
+  fruits: string[];
+  vegetables: string[];
+  seasonings: string[];
+}
+
 export interface DietPreferences {
   mealsPerDay: number;
   planDays: number;
   dietType: string;
   allergies: string[];
+  suggestionType: 'recipes' | 'ingredients';
+  selectedFoods: SelectedFoods;
 }
 
 export interface DietRequest extends NutritionPlanInput, DietPreferences {}

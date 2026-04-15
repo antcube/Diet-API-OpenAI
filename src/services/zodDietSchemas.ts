@@ -1,5 +1,11 @@
 import { z } from 'zod';
 
+const RecipeDetailsSchema = z.object({
+  plate_name: z.string(),
+  instructions: z.array(z.string()),
+  prep_time: z.string().optional(),
+});
+
 export const FoodSchema = z.object({
   name: z.string().min(2),
   quantity: z.string().min(1),
@@ -9,6 +15,7 @@ export const FoodSchema = z.object({
     f: z.number().min(0),
     c: z.number().min(0),
   }),
+  recipe: RecipeDetailsSchema.optional(),
 });
 
 export const MealSchema = z.object({
