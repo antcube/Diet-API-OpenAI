@@ -1,0 +1,88 @@
+import { z } from 'zod';
+export declare const FoodSchema: z.ZodObject<{
+    name: z.ZodString;
+    quantity: z.ZodString;
+    calories: z.ZodNumber;
+    macros: z.ZodObject<{
+        p: z.ZodNumber;
+        f: z.ZodNumber;
+        c: z.ZodNumber;
+    }, z.core.$strip>;
+    recipe: z.ZodOptional<z.ZodObject<{
+        plate_name: z.ZodString;
+        instructions: z.ZodArray<z.ZodString>;
+        prep_time: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const MealSchema: z.ZodObject<{
+    meal_name: z.ZodString;
+    time_suggestion: z.ZodOptional<z.ZodString>;
+    total_calories: z.ZodNumber;
+    foods: z.ZodArray<z.ZodObject<{
+        name: z.ZodString;
+        quantity: z.ZodString;
+        calories: z.ZodNumber;
+        macros: z.ZodObject<{
+            p: z.ZodNumber;
+            f: z.ZodNumber;
+            c: z.ZodNumber;
+        }, z.core.$strip>;
+        recipe: z.ZodOptional<z.ZodObject<{
+            plate_name: z.ZodString;
+            instructions: z.ZodArray<z.ZodString>;
+            prep_time: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
+    tips: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const DaySchema: z.ZodObject<{
+    day_number: z.ZodNumber;
+    meals: z.ZodArray<z.ZodObject<{
+        meal_name: z.ZodString;
+        time_suggestion: z.ZodOptional<z.ZodString>;
+        total_calories: z.ZodNumber;
+        foods: z.ZodArray<z.ZodObject<{
+            name: z.ZodString;
+            quantity: z.ZodString;
+            calories: z.ZodNumber;
+            macros: z.ZodObject<{
+                p: z.ZodNumber;
+                f: z.ZodNumber;
+                c: z.ZodNumber;
+            }, z.core.$strip>;
+            recipe: z.ZodOptional<z.ZodObject<{
+                plate_name: z.ZodString;
+                instructions: z.ZodArray<z.ZodString>;
+                prep_time: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        tips: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const DaysArraySchema: (mealsPerDay: number) => z.ZodArray<z.ZodObject<{
+    day_number: z.ZodNumber;
+    meals: z.ZodArray<z.ZodObject<{
+        meal_name: z.ZodString;
+        time_suggestion: z.ZodOptional<z.ZodString>;
+        total_calories: z.ZodNumber;
+        foods: z.ZodArray<z.ZodObject<{
+            name: z.ZodString;
+            quantity: z.ZodString;
+            calories: z.ZodNumber;
+            macros: z.ZodObject<{
+                p: z.ZodNumber;
+                f: z.ZodNumber;
+                c: z.ZodNumber;
+            }, z.core.$strip>;
+            recipe: z.ZodOptional<z.ZodObject<{
+                plate_name: z.ZodString;
+                instructions: z.ZodArray<z.ZodString>;
+                prep_time: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        tips: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>>;
+export declare const RecommendationsSchema: z.ZodObject<{
+    recommendations: z.ZodArray<z.ZodString>;
+}, z.core.$strip>;
