@@ -19,25 +19,27 @@ const isSafeLabelForRestriction = (foodName: string, term: string): boolean => {
   if (safePhrases.some((phrase) => foodName.includes(phrase))) return true;
 
   // Excepciones específicas SOLO para la familia de los lácteos
-  const dairyTerms = ['leche', 'queso', 'yogur', 'yogurt', 'mantequilla', 'nata', 'crema', 'suero'];
+  const dairyTerms = ['leche', 'queso', 'yogur', 'yogurt', 'mantequilla', 'nata', 'crema', 'suero', 'lacteo', 'lactosa'];
 
   if (dairyTerms.includes(term)) {
     const plantBasedOrigins = [
-      'de almendra', 'de almendras',
-      'de soja', 'de soya',
-      'de avena',
-      'de coco',
-      'vegetal',
-      'sin lactosa',
-      'lactose free',
-      'sin leche',
-      'milk free',
-      'de mani', 'de cacahuate'
+      'de almendra', 'de almendras', 'de soja', 'de soya', 'de avena', 'de coco',
+      'vegetal', 'sin leche', 'milk free', 'de mani', 'de cacahuate',
+      'sin lacteos', 'sin lactosa', 'vegano', 'vegana'
     ];
-
-    // Verificar si el nombre del alimento incluye alguna de estas frases
     if (plantBasedOrigins.some((phrase) => foodName.includes(phrase))) return true;
   }
+
+  // Excepciones específicas para gluten (ej: "Pan sin gluten", "Harina de trigo sarraceno")
+  const glutenTerms = ['pan', 'pasta', 'harina', 'galleta', 'trigo', 'gluten'];
+  if (glutenTerms.includes(term)) {
+    const glutenFreeOrigins = [
+      'sin gluten', 'gluten free', 'de arroz', 'de maiz', 
+      'de almendra', 'de coco', 'de yuca', 'de avena', 'integral sin gluten'
+    ];
+    if (glutenFreeOrigins.some((phrase) => foodName.includes(phrase))) return true;
+  }
+
   return false;
 };
 
@@ -51,7 +53,7 @@ export const buildRestrictedTerms = (data: DietRequest): string[] => {
   const byAllergy: Record<string, string[]> = {
     lacteos: ['leche', 'queso', 'yogur', 'yogurt', 'mantequilla', 'nata', 'crema', 'suero'],
     gluten: ['trigo', 'pan', 'pasta', 'harina', 'cebada', 'centeno', 'avena', 'galleta'],
-    'frutos secos': ['almendra', 'nuez', 'nueces', 'mani', 'cacahuate', 'avellana', 'pistacho', 'pecana', 'maranon']
+    'frutos-secos': ['almendra', 'nuez', 'nueces', 'mani', 'cacahuate', 'avellana', 'pistacho', 'pecana', 'maranon']
   };
 
   const allergyTerms = allergyList.flatMap(allergy => {

@@ -35,9 +35,21 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generatePlan = void 0;
 const dietService = __importStar(require("../services/openaiService"));
+const zodDietSchemas_1 = require("../schemas/zodDietSchemas");
 const generatePlan = async (req, res, next) => {
     try {
-        const data = req.body;
+        const parsed = zodDietSchemas_1.DietRequestSchema.safeParse(req.body);
+        if (!parsed.success) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Datos de entrada inválidos',
+                issues: parsed.error.issues.map((issue) => ({
+                    path: issue.path.join('.'),
+                    message: issue.message,
+                })),
+            });
+        }
+        const data = parsed.data;
         // 1. Generar plan_summary en backend
         const plan_summary = {
             total_calories: data.calories,
@@ -52,7 +64,7 @@ const generatePlan = async (req, res, next) => {
         // 2. Llamada al servicio
         const { days, general_recommendations } = await dietService.getCompleteDietPlan(data);
         // 3. El controller responde al cliente
-        return res.json({
+        return res.status(200).json({
             status: 'success',
             content: {
                 plan_summary,

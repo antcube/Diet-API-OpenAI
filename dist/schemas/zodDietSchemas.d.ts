@@ -1,4 +1,38 @@
 import { z } from 'zod';
+export declare const DietRequestSchema: z.ZodObject<{
+    calories: z.ZodCoercedNumber<unknown>;
+    proteins: z.ZodCoercedNumber<unknown>;
+    fats: z.ZodCoercedNumber<unknown>;
+    carbs: z.ZodCoercedNumber<unknown>;
+    name: z.ZodString;
+    goal: z.ZodString;
+    gender: z.ZodString;
+    age: z.ZodCoercedNumber<unknown>;
+    weight: z.ZodCoercedNumber<unknown>;
+    height: z.ZodCoercedNumber<unknown>;
+    activity: z.ZodString;
+    mealsPerDay: z.ZodCoercedNumber<unknown>;
+    planDays: z.ZodCoercedNumber<unknown>;
+    dietType: z.ZodString;
+    allergies: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+        lacteos: "lacteos";
+        gluten: "gluten";
+        "frutos-secos": "frutos-secos";
+    }>>>;
+    suggestionType: z.ZodEnum<{
+        recipes: "recipes";
+        ingredients: "ingredients";
+    }>;
+    selectedFoods: z.ZodObject<{
+        proteins: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        carbohydrates: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        fats: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        dairy: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        fruits: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        vegetables: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        seasonings: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
 export declare const FoodSchema: z.ZodObject<{
     name: z.ZodString;
     quantity: z.ZodString;

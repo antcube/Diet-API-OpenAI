@@ -22,11 +22,12 @@ export interface SelectedFoods {
     vegetables: string[];
     seasonings: string[];
 }
+export type AllergyOption = 'lacteos' | 'gluten' | 'frutos-secos';
 export interface DietPreferences {
     mealsPerDay: number;
     planDays: number;
     dietType: string;
-    allergies: string[];
+    allergies: AllergyOption[];
     suggestionType: 'recipes' | 'ingredients';
     selectedFoods: SelectedFoods;
 }

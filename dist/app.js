@@ -7,8 +7,29 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dietPlanRoutes_1 = __importDefault(require("./routes/dietPlanRoutes"));
 const app = (0, express_1.default)();
+const isProduction = process.env.NODE_ENV === 'production';
+const whitelist = isProduction
+    ? (process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [])
+    : ['http://localhost:3000', 'http://localhost:5173'];
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (!origin && !isProduction) {
+            return callback(null, true);
+        }
+        if (whitelist.includes(origin || '')) {
+            callback(null, true);
+        }
+        else {
+            console.error(`CORS bloqueó una petición desde: ${origin}`);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+};
 // Middleware
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 // Routes
 app.use('/api', dietPlanRoutes_1.default);
